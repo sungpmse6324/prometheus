@@ -1,0 +1,26 @@
+global:
+  smtp_smarthost: 'smtp.gmail.com:587'
+  smtp_from: 'sunghinhanh@gmail.com'
+  smtp_auth_username: 'sunghinhanh@gmail.com'
+  smtp_auth_password: 'Sung!@#$%^&*()pmSE63244'
+
+  slack_api_url: 'https://hooks.slack.com/services/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'
+
+route:
+  group_by: [alertname, datacenter, app]
+  receiver: 'team-1'
+
+receivers:
+  - name: 'team-1'
+    email_configs:
+    - to: 'sunghinhanh@gmail.com'
+    slack_configs:
+    - channel: '#prometheusalerts'
+      text: "<!channel> \nsummary: {{ .CommonAnnotations.summary }}\ndescription: {{ .CommonAnnotations.description }}"
+
+#inhibit_rules:
+#- source_match:
+#    alertname: 'InstanceDownPushgateway'
+#  target_match_re:
+#    alertname: '^.+'
+#  equal: ['job', 'instance', 'exported_job', 'exported_instance']
